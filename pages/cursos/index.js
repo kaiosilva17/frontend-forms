@@ -3,7 +3,9 @@ import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { Table } from 'react-bootstrap'
 import { set } from 'react-hook-form'
-import { BsTrash } from 'react-icons/bs'
+import { BsTrash, BsFillPlusCircleFill } from 'react-icons/bs'
+import { HiPencil } from 'react-icons/hi'
+
 
 const index = () => {
 
@@ -18,10 +20,12 @@ const index = () => {
   }
 
   function excluir(id) {
-    const items = getAll()
-    items.splice(id, 1)
-    window.localStorage.setItem('cursos', JSON.stringify(items))
-    setCursos(items)
+    if (confirm('Deseja realmente excluir o resgistro?')) {
+      const items = getAll()
+      items.splice(id, 1)
+      window.localStorage.setItem('cursos', JSON.stringify(items))
+      setCursos(items)
+    }
   }
 
   return (
@@ -29,6 +33,7 @@ const index = () => {
       <Pagina titulo='Cursos'>
 
         <Link href='/cursos/form' className='mb-2 btn btn-primary'>
+          <BsFillPlusCircleFill className='me-2' />
           Novo
         </Link>
 
@@ -44,7 +49,13 @@ const index = () => {
           <tbody>
             {cursos.map((item, i) => (
               <tr key={i}>
-                <td><BsTrash onClick={() => excluir(i)} className='text-danger' /></td>
+                <td>
+                  <Link href={'/cursos/' + i}>
+                    <HiPencil title='alterar' className='text-primary' />
+                  </Link>
+                  {''}
+                  <BsTrash title='excluir' onClick={() => excluir(i)} className='text-danger' />
+                </td>
                 <td>{item.nome}</td>
                 <td>{item.duracao}</td>
                 <td>{item.modalidade}</td>

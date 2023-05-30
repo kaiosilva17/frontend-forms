@@ -12,8 +12,18 @@ const index = () => {
   const [disciplinas, setDisciplinas] = useState([])
 
   useEffect(() => {
-    
+    getAll()
   }, [])
+
+  function getAll() {
+    axios.get('/api/disciplinas').then(resultado => {
+      setDisciplinas(resultado.data)
+    })
+  }
+
+  function excluir(id) {
+    axios.delete('/api/disciplinas/' + id)
+  }
 
   return (
     <>
@@ -29,23 +39,22 @@ const index = () => {
             <tr>
               <th>#</th>
               <th>Nome</th>
-              <th>Duracao</th>
-              <th>Modalidade</th>
+              <th>Curso</th>
             </tr>
           </thead>
           <tbody>
-            {disciplinas.map((item, i) => (
-              <tr key={i}>
+            {disciplinas.map(item => (
+              <tr key={item.id}>
                 <td>
-                  <Link href={'/disciplinas/' + i}>
+                  <Link href={'/disciplinas/' + item.id}>
                     <HiPencil title='alterar' className='text-primary' />
                   </Link>
                   {''}
-                  <BsTrash title='excluir' onClick={() => excluir(i)} className='text-danger' />
+                  <BsTrash title='excluir' onClick={() => excluir(item.id)} className='text-danger' />
                 </td>
                 <td>{item.nome}</td>
-                <td>{item.duracao}</td>
-                <td>{item.modalidade}</td>
+                <td>{item.curso}</td>
+
               </tr>
             ))}
           </tbody>

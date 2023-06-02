@@ -1,4 +1,5 @@
 import Pagina from '@/Components/Pagina'
+import axios from 'axios'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { Table } from 'react-bootstrap'
@@ -22,7 +23,10 @@ const index = () => {
   }
 
   function excluir(id) {
-    axios.delete('/api/disciplinas/' + id)
+    if (confirm('Deseja realmente excluir o resgistro?')){
+      axios.delete('/api/disciplinas/' + id)
+      getAll()
+    }
   }
 
   return (

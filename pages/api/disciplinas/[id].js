@@ -10,25 +10,16 @@ export default function handler(req, res) {
 
     if (req.method == 'GET') {
 
-        get(child(ref(db), 'disciplinas')).then(snapshot => {
-
-            const retorno = []
-            
-            snapshot.forEach(item => {
-                retorno.push(item.val())
-
-            })
-
-            res.status(200).json(retorno)
-
+        get(child(ref(db), 'disciplinas/' + id)).then(snapshot => {
+            res.status(200).json(snapshot.val())
         })
 
     } else if (req.method == 'PUT') {
 
-        const uuid = v4()
         const dados = req.body
-        dados.id = uuid
-        set(ref(db, 'disciplinas/' + uuid), dados)
+ 
+        update(ref(db, 'disciplinas/' + id), dados)
+        res.status(200).json(dados)
 
     } else if (req.method == 'DELETE') {
 

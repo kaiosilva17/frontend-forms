@@ -1,4 +1,5 @@
 import Pagina from '../../Components/Pagina'
+import axios from 'axios'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { Table } from 'react-bootstrap'
@@ -9,30 +10,30 @@ import { HiPencil } from 'react-icons/hi'
 
 const index = () => {
 
-  const [cursos, setCursos] = useState([])
+  const [disciplinas, setDisciplinas] = useState([])
 
   useEffect(() => {
-    setCursos(getAll())
+    getAll()
   }, [])
 
   function getAll() {
-    return JSON.parse(window.localStorage.getItem('cursos')) || []
+    axios.get('/api/disciplinas').then(resultado => {
+      setDisciplinas(resultado.data)
+    })
   }
 
   function excluir(id) {
-    if (confirm('Deseja realmente excluir o resgistro?')) {
-      const items = getAll()
-      items.splice(id, 1)
-      window.localStorage.setItem('cursos', JSON.stringify(items))
-      setCursos(items)
+    if (confirm('Deseja realmente excluir o resgistro?')){
+      axios.delete('/api/disciplinas/' + id)
+      getAll()
     }
   }
 
   return (
     <>
-      <Pagina titulo='Cursos'>
+      <Pagina titulo='disciplinas'>
 
-        <Link href='/cursos/form' className='mb-2 btn btn-primary'>
+        <Link href='/disciplinas/form' className='mb-2 btn btn-primary'>
           <BsFillPlusCircleFill className='me-2' />
           Novo
         </Link>
@@ -42,23 +43,22 @@ const index = () => {
             <tr>
               <th>#</th>
               <th>Nome</th>
-              <th>Duracao</th>
-              <th>Modalidade</th>
+              <th>Curso</th>
             </tr>
           </thead>
           <tbody>
-            {cursos.map((item, i) => (
-              <tr key={i}>
+            {disciplinas.map(item => (
+              <tr key={item.id}>
                 <td>
-                  <Link href={'/cursos/' + i}>
+                  <Link href={'/disciplinas/' + item.id}>
                     <HiPencil title='alterar' className='text-primary' />
                   </Link>
                   {''}
-                  <BsTrash title='excluir' onClick={() => excluir(i)} className='text-danger' />
+                  <BsTrash title='excluir' onClick={() => excluir(item.id)} className='text-danger' />
                 </td>
                 <td>{item.nome}</td>
-                <td>{item.duracao}</td>
-                <td>{item.modalidade}</td>
+                <td>{item.curso}</td>
+
               </tr>
             ))}
           </tbody>

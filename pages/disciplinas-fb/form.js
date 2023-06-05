@@ -1,35 +1,22 @@
-import Pagina from '../../Components/Pagina'
+import Pagina from '@/Components/Pagina'
+import axios from 'axios'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Button, Form } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
 import { AiFillSave, AiOutlineDoubleLeft } from 'react-icons/ai'
 
 const form = () => {
 
-    const { push, query } = useRouter()
-    const { register, handleSubmit, setValue } = useForm()
-
-    useEffect(() => {
-
-        if (query.id) {
-            const id = query.id
-            const disciplinas = JSON.parse(window.localStorage.getItem('disciplinas'))
-            const disciplina = disciplinas[id]
-
-            for (let atributo in disciplina) {
-                setValue(atributo, disciplina[atributo])
-            }
-        }
-    }, [query.id])
+    const { push } = useRouter()
+    const { register, handleSubmit } = useForm()
 
     function salvar(dados) {
         console.log(dados)
-        const disciplinas = JSON.parse(window.localStorage.getItem('disciplinas')) || []
-        disciplinas.splice(query.id, 1, dados)
-        window.localStorage.setItem('disciplinas', JSON.stringify(disciplinas))
+        axios.post('/api/disciplinas', dados)
         push('/disciplinas')
+        
     }
 
     return (
@@ -44,6 +31,7 @@ const form = () => {
                         <Form.Label>Curso:</Form.Label>
                         <Form.Control type="text" {...register('curso')} />
                     </Form.Group>
+                  
 
                     <div className='text-center'>
                         <Link className='btn btn-danger' href="/disciplinas">
@@ -55,7 +43,6 @@ const form = () => {
                             Salvar
                         </Button>
                     </div>
-
                 </Form>
             </Pagina>
         </>

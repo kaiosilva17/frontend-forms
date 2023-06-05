@@ -15,38 +15,42 @@ const form = () => {
 
         if (query.id) {
             const id = query.id
-            const disciplinas = JSON.parse(window.localStorage.getItem('disciplinas'))
-            const disciplina = disciplinas[id]
+            const semestres = JSON.parse(window.localStorage.getItem('semestres'))
+            const semestre = semestres[id]
 
-            for (let atributo in disciplina) {
-                setValue(atributo, disciplina[atributo])
+            for (let atributo in semestre) {
+                setValue(atributo, semestre[atributo])
             }
         }
     }, [query.id])
 
     function salvar(dados) {
         console.log(dados)
-        const disciplinas = JSON.parse(window.localStorage.getItem('disciplinas')) || []
-        disciplinas.splice(query.id, 1, dados)
-        window.localStorage.setItem('disciplinas', JSON.stringify(disciplinas))
-        push('/disciplinas')
+        const semestres = JSON.parse(window.localStorage.getItem('semestres')) || []
+        semestres.splice(query.id, 1, dados)
+        window.localStorage.setItem('semestres', JSON.stringify(semestres))
+        push('/semestres')
     }
 
     return (
         <>
-            <Pagina titulo='Disciplina'>
+            <Pagina titulo='Semestre'>
                 <Form>
                     <Form.Group className="mb-3" controlId="nome">
                         <Form.Label>Nome:</Form.Label>
                         <Form.Control type="text" {...register('nome')} />
                     </Form.Group>
-                    <Form.Group className="mb-3" controlId="curso">
-                        <Form.Label>Curso:</Form.Label>
-                        <Form.Control type="text" {...register('curso')} />
+                    <Form.Group className="mb-3" controlId="data_inicio">
+                        <Form.Label>Data Inicio:</Form.Label>
+                        <Form.Control type="text" {...register('data_inicio')} />
+                    </Form.Group>
+                    <Form.Group className="mb-3" controlId="data_fim">
+                        <Form.Label>Data Fim:</Form.Label>
+                        <Form.Control type="text" {...register('data_fim')} />
                     </Form.Group>
 
                     <div className='text-center'>
-                        <Link className='btn btn-danger' href="/disciplinas">
+                        <Link className='btn btn-danger' href="/semestres">
                             <AiOutlineDoubleLeft className="me-2" />
                             Voltar
                         </Link>
@@ -55,7 +59,6 @@ const form = () => {
                             Salvar
                         </Button>
                     </div>
-
                 </Form>
             </Pagina>
         </>

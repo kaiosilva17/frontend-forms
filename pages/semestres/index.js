@@ -9,30 +9,30 @@ import { HiPencil } from 'react-icons/hi'
 
 const index = () => {
 
-  const [cursos, setCursos] = useState([])
+  const [semestres, setSemestres] = useState([])
 
   useEffect(() => {
-    setCursos(getAll())
+    setSemestres(getAll())
   }, [])
 
   function getAll() {
-    return JSON.parse(window.localStorage.getItem('cursos')) || []
+    return JSON.parse(window.localStorage.getItem('semestres')) || []
   }
 
   function excluir(id) {
     if (confirm('Deseja realmente excluir o resgistro?')) {
       const items = getAll()
       items.splice(id, 1)
-      window.localStorage.setItem('cursos', JSON.stringify(items))
-      setCursos(items)
+      window.localStorage.setItem('semestres', JSON.stringify(items))
+      setSemestres(items)
     }
   }
 
   return (
     <>
-      <Pagina titulo='Cursos'>
+      <Pagina titulo='Semestres'>
 
-        <Link href='/cursos/form' className='mb-2 btn btn-primary'>
+        <Link href='/semestres/form' className='mb-2 btn btn-primary'>
           <BsFillPlusCircleFill className='me-2' />
           Novo
         </Link>
@@ -42,23 +42,23 @@ const index = () => {
             <tr>
               <th>#</th>
               <th>Nome</th>
-              <th>Duracao</th>
-              <th>Modalidade</th>
+              <th>Data Inicio</th>
+              <th>Data Fim</th>
             </tr>
           </thead>
           <tbody>
-            {cursos.map((item, i) => (
+            {semestres.map((item, i) => (
               <tr key={i}>
                 <td>
-                  <Link href={'/cursos/' + i}>
+                  <Link href={'/semestres/' + i}>
                     <HiPencil title='alterar' className='text-primary' />
                   </Link>
                   {''}
                   <BsTrash title='excluir' onClick={() => excluir(i)} className='text-danger' />
                 </td>
                 <td>{item.nome}</td>
-                <td>{item.duracao}</td>
-                <td>{item.modalidade}</td>
+                <td>{item.data_inicio}</td>
+                <td>{item.data_fim}</td>
               </tr>
             ))}
           </tbody>

@@ -1,5 +1,4 @@
-import Pagina from '@/Components/Pagina'
-import axios from 'axios'
+import Pagina from '../../Components/Pagina'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { Table } from 'react-bootstrap'
@@ -13,25 +12,25 @@ const index = () => {
   const [disciplinas, setDisciplinas] = useState([])
 
   useEffect(() => {
-    getAll()
+    setDisciplinas(getAll())
   }, [])
 
   function getAll() {
-    axios.get('/api/disciplinas').then(resultado => {
-      setDisciplinas(resultado.data)
-    })
+    return JSON.parse(window.localStorage.getItem('disciplinas')) || []
   }
 
   function excluir(id) {
-    if (confirm('Deseja realmente excluir o resgistro?')){
-      axios.delete('/api/disciplinas/' + id)
-      getAll()
+    if (confirm('Deseja realmente excluir o resgistro?')) {
+      const items = getAll()
+      items.splice(id, 1)
+      window.localStorage.setItem('disciplinas', JSON.stringify(items))
+      setDisciplinas(items)
     }
   }
 
   return (
     <>
-      <Pagina titulo='disciplinas'>
+      <Pagina titulo='Disciplinas'>
 
         <Link href='/disciplinas/form' className='mb-2 btn btn-primary'>
           <BsFillPlusCircleFill className='me-2' />
@@ -47,18 +46,17 @@ const index = () => {
             </tr>
           </thead>
           <tbody>
-            {disciplinas.map(item => (
-              <tr key={item.id}>
+            {disciplinas.map((item, i) => (
+              <tr key={i}>
                 <td>
-                  <Link href={'/disciplinas/' + item.id}>
+                  <Link href={'/disciplinas/' + i}>
                     <HiPencil title='alterar' className='text-primary' />
                   </Link>
                   {''}
-                  <BsTrash title='excluir' onClick={() => excluir(item.id)} className='text-danger' />
+                  <BsTrash title='excluir' onClick={() => excluir(i)} className='text-danger' />
                 </td>
                 <td>{item.nome}</td>
                 <td>{item.curso}</td>
-
               </tr>
             ))}
           </tbody>

@@ -1,5 +1,4 @@
-import Pagina from '@/Components/Pagina'
-import axios from 'axios'
+import Pagina from '../../Components/Pagina'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import React from 'react'
@@ -14,14 +13,15 @@ const form = () => {
 
     function salvar(dados) {
         console.log(dados)
-        axios.post('/api/disciplinas', dados)
+        const disciplinas = JSON.parse(window.localStorage.getItem('disciplinas')) || []
+        disciplinas.push(dados)
+        window.localStorage.setItem('disciplinas', JSON.stringify(disciplinas))
         push('/disciplinas')
-        
     }
 
     return (
         <>
-            <Pagina titulo='Disciplina'>
+            <Pagina titulo='disciplina'>
                 <Form>
                     <Form.Group className="mb-3" controlId="nome">
                         <Form.Label>Nome:</Form.Label>
@@ -31,7 +31,6 @@ const form = () => {
                         <Form.Label>Curso:</Form.Label>
                         <Form.Control type="text" {...register('curso')} />
                     </Form.Group>
-                  
 
                     <div className='text-center'>
                         <Link className='btn btn-danger' href="/disciplinas">

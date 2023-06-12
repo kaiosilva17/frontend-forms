@@ -41,10 +41,10 @@ const alunosValidator = {
 
     telefone: {
         required: 'Campo Obrigatório',
-        pattern: {
-            value: /^\d{4,5}\-\d{4}$/,
-            message: "telefone invalido, exemplo: 99999-9999"
-        }
+        maxLength: {
+            value: 15,
+        },
+
     },
 
     cep: {

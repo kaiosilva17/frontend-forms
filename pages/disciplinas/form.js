@@ -5,11 +5,12 @@ import React from 'react'
 import { Button, Form } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
 import { AiFillSave, AiOutlineDoubleLeft } from 'react-icons/ai'
+import disciplinasValidator from '../../validators/disciplinasValidator'
 
 const form = () => {
 
     const { push } = useRouter()
-    const { register, handleSubmit } = useForm()
+    const { register, handleSubmit, formState: { errors } } = useForm()
 
     function salvar(dados) {
         console.log(dados)
@@ -25,11 +26,19 @@ const form = () => {
                 <Form>
                     <Form.Group className="mb-3" controlId="nome">
                         <Form.Label>Nome:</Form.Label>
-                        <Form.Control type="text" {...register('nome')} />
+                        <Form.Control isInvalid={errors.nome} type="text" {...register('nome', disciplinasValidator.nome)} />
+                        {
+                            errors.nome &&
+                            <small className='text-danger'>{errors.nome.message}</small>
+                        }
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="curso">
                         <Form.Label>Curso:</Form.Label>
-                        <Form.Control type="text" {...register('curso')} />
+                        <Form.Control isInvalid={errors.curso} type="text" {...register('curso', disciplinasValidator.curso)} />
+                        {
+                            errors.curso &&
+                            <small className='text-danger'>{errors.curso.message}</small>
+                        }
                     </Form.Group>
 
                     <div className='text-center'>

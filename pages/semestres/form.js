@@ -5,11 +5,12 @@ import React from 'react'
 import { Button, Form } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
 import { AiFillSave, AiOutlineDoubleLeft } from 'react-icons/ai'
+import semestresValidator from '../../validators/semestresValidator'
 
 const form = () => {
 
     const { push } = useRouter()
-    const { register, handleSubmit } = useForm()
+    const { register, handleSubmit, formState: { errors } } = useForm()
 
     function salvar(dados) {
         console.log(dados)
@@ -25,15 +26,27 @@ const form = () => {
                 <Form>
                     <Form.Group className="mb-3" controlId="nome">
                         <Form.Label>Nome:</Form.Label>
-                        <Form.Control type="text" {...register('nome')} />
+                        <Form.Control isInvalid={errors.nome} type="text" {...register('nome', semestresValidator.nome)} />
+                        {
+                            errors.nome &&
+                            <small className='text-danger'>{errors.nome.message}</small>
+                        }
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="data_inicio">
                         <Form.Label>Data Inicio:</Form.Label>
-                        <Form.Control type="text" {...register('data_inicio')} />
+                        <Form.Control isInvalid={errors.data_inicio} type="text" {...register('data_inicio', semestresValidator.data_inicio)} />
+                        {
+                            errors.data_inicio &&
+                            <small className='text-danger'>{errors.data_inicio.message}</small>
+                        }
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="data_fim">
                         <Form.Label>Data Fim:</Form.Label>
-                        <Form.Control type="text" {...register('data_fim')} />
+                        <Form.Control isInvalid={errors.data_fim} type="text" {...register('data_fim', semestresValidator.data_fim)} />
+                        {
+                            errors.data_fim &&
+                            <small className='text-danger'>{errors.data_fim.message}</small>
+                        }
                     </Form.Group>
 
                     <div className='text-center'>

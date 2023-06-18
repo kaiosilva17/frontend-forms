@@ -29,6 +29,7 @@ const form = () => {
         setValue(name, mask(valor, mascara))
     }
 
+
     return (
         <>
             <Pagina titulo='Aluno'>
@@ -43,11 +44,12 @@ const form = () => {
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="cpf">
                         <Form.Label>CPF:</Form.Label>
-                        <Form.Control
-                            mask='999.999.999-99'
-                            isInvalid={errors.cpf} type="text"
-                            {...register('cpf', alunosValidator.cpf)}
-                            onChange={handleChange} />
+                        <Form.Control 
+                        mask='999.999.999-99'
+                        isInvalid={errors.cpf} 
+                        type="text" 
+                        {...register('cpf', alunosValidator.cpf)} 
+                        onChange={handleChange} />
                         {
                             errors.cpf &&
                             <small className='text-danger'>{errors.cpf.message}</small>
@@ -63,7 +65,11 @@ const form = () => {
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="email">
                         <Form.Label>Email:</Form.Label>
-                        <Form.Control isInvalid={errors.email} type="text" {...register('email', alunosValidator.email)} />
+                        <Form.Control 
+                        isInvalid={errors.email} 
+                        type="text" 
+                        {...register('email', alunosValidator.email)} 
+                        />
                         {
                             errors.email &&
                             <small className='text-danger'>{errors.email.message}</small>
@@ -72,7 +78,7 @@ const form = () => {
                     <Form.Group className="mb-3" controlId="telefone">
                         <Form.Label>Telefone:</Form.Label>
                         <Form.Control 
-                        mask='(99) 99999-9999'
+                        mask='(99) 99999-9999' 
                         isInvalid={errors.telefone} 
                         type="text" 
                         {...register('telefone', alunosValidator.telefone)} 
@@ -84,7 +90,8 @@ const form = () => {
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="cep">
                         <Form.Label>CEP:</Form.Label>
-                        <Form.Control mask='99999-999'
+                        <Form.Control 
+                        mask='99.999-999' 
                         isInvalid={errors.cep} 
                         type="text" 
                         {...register('cep', alunosValidator.cep)} 

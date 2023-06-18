@@ -6,11 +6,12 @@ import { Button, Form } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
 import { AiFillSave, AiOutlineDoubleLeft } from 'react-icons/ai'
 import professoresValidator from '../../validators/professoresValidator'
+import { mask } from 'remask'
 
 const form = () => {
 
     const { push } = useRouter()
-    const { register, handleSubmit, formState: { errors } } = useForm()
+    const { register, handleSubmit, formState: { errors }, setValue } = useForm()
 
     function salvar(dados) {
         console.log(dados)
@@ -18,6 +19,14 @@ const form = () => {
         professores.push(dados)
         window.localStorage.setItem('professores', JSON.stringify(professores))
         push('/professores')
+    }
+
+    function handleChange(event) {
+        const name = event.target.name
+        const valor = event.target.value
+        const mascara = event.target.getAttribute('mask')
+
+        setValue(name, mask(valor, mascara))
     }
 
     return (
@@ -34,7 +43,12 @@ const form = () => {
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="cpf">
                         <Form.Label>CPF:</Form.Label>
-                        <Form.Control isInvalid={errors.cpf} type="text" {...register('cpf', professoresValidator.cpf)} />
+                        <Form.Control 
+                        mask='999.999.999-99' 
+                        isInvalid={errors.cpf} 
+                        type="text" 
+                        {...register('cpf', professoresValidator.cpf)} 
+                        onChange={handleChange} />
                         {
                             errors.cpf &&
                             <small className='text-danger'>{errors.cpf.message}</small>
@@ -66,7 +80,12 @@ const form = () => {
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="telefone">
                         <Form.Label>Telefone:</Form.Label>
-                        <Form.Control isInvalid={errors.telefone} type="text" {...register('telefone', professoresValidator.telefone)} />
+                        <Form.Control 
+                        mask='(99) 99999-9999' 
+                        isInvalid={errors.telefone} 
+                        type="text" 
+                        {...register('telefone', professoresValidator.telefone)} 
+                        onChange={handleChange} />
                         {
                             errors.telefone &&
                             <small className='text-danger'>{errors.telefone.message}</small>
@@ -74,7 +93,12 @@ const form = () => {
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="cep">
                         <Form.Label>CEP:</Form.Label>
-                        <Form.Control isInvalid={errors.cep} type="text" {...register('cep', professoresValidator.cep)} />
+                        <Form.Control 
+                        mask='99.999-999' 
+                        isInvalid={errors.cep} 
+                        type="text" 
+                        {...register('cep', professoresValidator.cep)} 
+                        onChange={handleChange} />
                         {
                             errors.cep &&
                             <small className='text-danger'>{errors.cep.message}</small>

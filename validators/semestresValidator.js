@@ -13,18 +13,12 @@ const semestresValidator = {
 
     data_inicio: {
         required: 'Campo Obrigatório',
-        pattern: {
-            value: /^\d{2}\/\d{2}\/\d{4}$/,
-            message: 'data invalida, exemplo: 10/10/2023'
-        },
-    },
+       
 
     data_fim: {
         required: 'Campo Obrigatório',
-        pattern: {
-            value: /^\d{2}\/\d{2}\/\d{4}$/,
-            message: 'data invalida, exemplo: 10/10/2023'
-        },
+    
+    }
     }
 }
 

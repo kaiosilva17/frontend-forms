@@ -6,11 +6,12 @@ import { Button, Form } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
 import { AiFillSave, AiOutlineDoubleLeft } from 'react-icons/ai'
 import semestresValidator from '../../validators/semestresValidator'
+import { mask } from 'remask'
 
 const form = () => {
 
     const { push } = useRouter()
-    const { register, handleSubmit, formState: { errors } } = useForm()
+    const { register, handleSubmit, formState: { errors }, setValue } = useForm()
 
     function salvar(dados) {
         console.log(dados)
@@ -18,6 +19,14 @@ const form = () => {
         semestres.push(dados)
         window.localStorage.setItem('semestres', JSON.stringify(semestres))
         push('/semestres')
+    }
+
+    function handleChange(event) {
+        const name = event.target.name
+        const valor = event.target.value
+        const mascara = event.target.getAttribute('mask')
+
+        setValue(name, mask(valor, mascara))
     }
 
     return (
@@ -34,7 +43,12 @@ const form = () => {
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="data_inicio">
                         <Form.Label>Data Inicio:</Form.Label>
-                        <Form.Control isInvalid={errors.data_inicio} type="text" {...register('data_inicio', semestresValidator.data_inicio)} />
+                        <Form.Control 
+                        mask='99/99/9999'
+                        isInvalid={errors.data_inicio} 
+                        type="text" 
+                        {...register('data_inicio', semestresValidator.data_inicio)} 
+                        onChange={handleChange} />
                         {
                             errors.data_inicio &&
                             <small className='text-danger'>{errors.data_inicio.message}</small>
@@ -42,7 +56,12 @@ const form = () => {
                     </Form.Group>
                     <Form.Group className="mb-3" controlId="data_fim">
                         <Form.Label>Data Fim:</Form.Label>
-                        <Form.Control isInvalid={errors.data_fim} type="text" {...register('data_fim', semestresValidator.data_fim)} />
+                        <Form.Control 
+                        mask='99/99/9999'
+                        isInvalid={errors.data_fim} 
+                        type="text" 
+                        {...register('data_fim', semestresValidator.data_fim)} 
+                        onChange={handleChange}  />
                         {
                             errors.data_fim &&
                             <small className='text-danger'>{errors.data_fim.message}</small>

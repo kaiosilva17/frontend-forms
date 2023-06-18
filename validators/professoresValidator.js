@@ -14,10 +14,7 @@ const professoresValidator = {
 
     cpf: {
         required: 'Campo Obrigatório',
-        pattern: {
-            value: /^(\d{3}\.){2}\d{3}\-\d{2}$/,
-            message: "cpf invalido, exepmlo: 251.251.251-25"
-        }
+        
     },
 
     matricula: {
@@ -54,18 +51,12 @@ const professoresValidator = {
 
     telefone: {
         required: 'Campo Obrigatório',
-        pattern: {
-            value: /^\d{4,5}\-\d{4}$/,
-            message: "telefone invalido, exemplo: 99999-9999"
-        }
+       
     },
 
     cep: {
         required: 'Campo Obrigatório',
-        pattern: {
-            value: /^[0-9]{5}-[0-9]{3}$/,
-            message: 'cep invalido, exemplo: 12345-123'
-        },
+       
     },
 
     logradouro: {

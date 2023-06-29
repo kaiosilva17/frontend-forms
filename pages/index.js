@@ -22,7 +22,7 @@ export default function Home() {
             Ao entrar na <b style={{color:'#FFC222',  textShadow: '2px 2px 4px rgba(255, 255, 255, 0.6)'}}>area do ADM</b>, 4 tabelas deverão ser preenchidas: inicalmente a tabela <b style={{color:'#FFC222',  textShadow: '2px 2px 4px rgba(255, 255, 255, 0.6)'}}>'aeroporto'</b>, <b style={{color:'#FFC222',  textShadow: '2px 2px 4px rgba(255, 255, 255, 0.6)'}}>'aeronave'</b>,
             <b style={{color:'#FFC222',  textShadow: '2px 2px 4px rgba(255, 255, 255, 0.6)'}}>'classe'</b> e <b style={{color:'#FFC222',  textShadow: '2px 2px 4px rgba(255, 255, 255, 0.6)'}}>'voo'</b>, na qual as informações fornecidas serão usadas na area do cliente.
           </Card.Text>
-          <Link className='col-md-3 btn btn-outline-warning' href="/aeroporto">
+          <Link className='col-md-3 btn btn-outline-warning' href="/aeronave">
                             <RiAdminFill className="me-2" />
                             Acessar
                         </Link>
